@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UFUG 1501 普通物理 I — 模組二筆記（重力與流體）</title>
+<script>
+  MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js" async></script>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --ink:#e6e9ef; --muted:#9aa3b2;
+    --accent:#6cc0ff; --accent2:#ffd166; --line:#2a2f3a; --ok:#7ee0a8; --warn:#ff9b85;
+    --code:#cdd6e4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",system-ui,sans-serif;
+       line-height:1.75;font-size:16px}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 22px 80px}
+  h1{font-size:28px;line-height:1.3;margin:0 0 6px}
+  h2{font-size:22px;margin:42px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--accent);color:var(--accent)}
+  h3{font-size:18px;margin:30px 0 8px;color:var(--accent2)}
+  h4{font-size:16px;margin:20px 0 6px;color:var(--ink)}
+  p{margin:10px 0}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .card.alt{background:var(--panel2)}
+  ul,ol{padding-left:22px}
+  li{margin:6px 0}
+  code{background:#222733;color:var(--code);padding:2px 6px;border-radius:5px;font-size:14px}
+  .eq{background:#10131a;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:12px 0;overflow-x:auto}
+  .note{background:rgba(108,192,255,.08);border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0}
+  .note.warn{background:rgba(255,155,133,.08);border-left-color:var(--warn)}
+  .example{background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.35);border-radius:12px;padding:18px 20px;margin:22px 0}
+  .example h3{color:var(--accent2);margin-top:0}
+  .given{background:#10131a;border:1px dashed var(--line);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:15px}
+  .ans{font-weight:700;color:var(--ok)}
+  .step{margin:8px 0;padding-left:4px}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+  th{background:var(--panel2);color:var(--accent)}
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+  .toc a{color:var(--accent);text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .small{font-size:13px;color:var(--muted)}
+  hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+  .formula-key{color:var(--accent2)}
+  .fig{background:#10131a;border:1px solid var(--line);border-radius:8px;padding:10px;margin:14px 0;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>UFUG 1501 普通物理 I — 模組二筆記</h1>
+<div class="sub">主題：重力與流體（Gravitation and Fluids）｜ 對應教材 Walker (2018) 第 13、14 章<br>
+本筆記將 49 頁講義整理為繁體中文，並附 11 道例題的完整逐步詳解。</div>
+
+<div class="toc">
+<strong>目錄</strong>
+<ol>
+  <li><a href="#ga">A. 重力（Gravitation, Ch.13）</a>
+    <ul>
+      <li><a href="#newton">A1. 牛頓萬有引力定律</a> ｜ <a href="#shell">A2. 球殼定理</a> ｜ <a href="#pair">A3. 第三定律力對</a></li>
+      <li><a href="#super">A4. 疊加原理</a> ｜ <a href="#near">A5. 地表附近重力</a> ｜ <a href="#rot">A6. 自轉效應</a> ｜ <a href="#inside">A7. 地球內部</a></li>
+      <li><a href="#pe">A8. 重力位能</a> ｜ <a href="#path">A9. 路徑獨立</a> ｜ <a href="#esc">A10. 逃逸速度</a></li>
+      <li><a href="#kepler">A11. 克卜勒三定律</a> ｜ <a href="#sat">A12. 衛星軌道與能量</a> ｜ <a href="#einstein">A13. 愛因斯坦重力觀</a></li>
+    </ul>
+  </li>
+  <li><a href="#exA">A 部分例題詳解（7 題）</a></li>
+  <li><a href="#fa">B. 流體（Fluids, Ch.14）</a>
+    <ul>
+      <li><a href="#whatf">B1. 什麼是流體</a> ｜ <a href="#rho">B2. 密度</a> ｜ <a href="#pres">B3. 壓力</a></li>
+      <li><a href="#rest">B4. 靜止流體與帕斯卡原理</a> ｜ <a href="#arch">B5. 阿基米德原理</a></li>
+      <li><a href="#ideal">B6. 理想流體流動</a> ｜ <a href="#cont">B7. 連續方程</a> ｜ <a href="#bern">B8. 伯努利方程</a></li>
+    </ul>
+  </li>
+  <li><a href="#exB">B 部分例題詳解（4 題）</a></li>
+  <li><a href="#summary">總結</a></li>
+</ol>
+</div>
+
+<!-- ================= A. GRAVITATION ================= -->
+<h2 id="ga">A. 重力（Gravitation）</h2>
+
+<h3 id="newton">A1. 牛頓萬有引力定律</h3>
+<p>重力是宇宙中最重要的力之一：把我們固定在地球上、維持地球繞日、凝聚星系、形成黑洞、甚至試圖減緩宇宙膨脹。兩質點間的萬有引力：</p>
+<div class="eq">\[\vec F = G\,\frac{m_1 m_2}{r^2}\,\hat r\]</div>
+<p>其中 <span class="formula-key">\(G = 6.67\times10^{-11}\ \text{N·m}^2/\text{kg}^2\)（= \(\text{m}^3\,\text{kg}^{-1}\,\text{s}^{-2}\)）</span>為重力常數；\(\hat r\) 是由施力質點指向受力質點的單位向量（重力恆為<strong>吸引</strong>）。</p>
+
+<h3 id="shell">A2. 球殼定理（Shell Theorem）</h3>
+<div class="note">
+<ul>
+  <li><strong>殼外</strong>：均勻球殼對殼外質點的引力，等同於「全部質量集中在球心」的質點。</li>
+  <li><strong>殼內</strong>：均勻球殼對殼內質點的<strong>淨重力為零</strong>（各元素引力向量和為零，但個別力不消失）。</li>
+</ul>
+</div>
+
+<h3 id="pair">A3. 第三定律力對（Apple & Earth）</h3>
+<p>地球以 0.80 N 向下拉蘋果，蘋果必以同樣大小 0.80 N 向上拉地球。為何我們說「蘋果落向地球」而非「地球落向蘋果」？比較加速度：蘋果 \(9.8\ \text{m/s}^2\)，地球僅約 \(1\times10^{-25}\ \text{m/s}^2\)（因地球質量大得多，\(a=F/m\)）。</p>
+
+<h3 id="super">A4. 疊加原理（Superposition）</h3>
+<p>重力服從向量疊加：質點 1 受多個質點之淨力為各力的向量和；對真實物體則改為積分：</p>
+<div class="eq">\[\vec F_{1,net}=\sum_{i\ge2}\vec F_{1i}\quad\longrightarrow\quad \vec F_1=\int d\vec F\]</div>
+<p>若物體是均勻球或球殼，可直接把質量視為集中在球心。</p>
+
+<h3 id="near">A5. 地表附近的重力</h3>
+<p>設地球為半徑 R、質量 M 的均勻球。在 \(r\ge R\) 處：</p>
+<div class="eq">\[F=G\frac{Mm}{r^2}=ma_g\quad\Rightarrow\quad a_g=\frac{GM}{r^2}\]</div>
+<p>實測 \(g\) 會偏離 \(a_g\)，原因：地球質量分布不均、非完美球體、且地球自轉。</p>
+
+<h3 id="rot">A6. 自轉效應（赤道 vs 極地）</h3>
+<p>赤道上的木箱做圓周運動，需向心力。力平衡：\(F_N-ma_g=m(-\omega^2R)\)，故</p>
+<div class="eq">\[g_{\text{measured}}=a_g-\omega^2R\quad(<a_g)\]</div>
+<p>以 \(R=6.37\times10^6\ \text{m}\)、\(\omega=2\pi/86400\approx7.27\times10^{-5}\ \text{s}^{-1}\) 計算，赤道 \(g\) 比極地 \(a_g\) 小約 <strong>0.034 m/s²</strong>。</p>
+
+<h3 id="inside">A7. 地球內部的重力（簡諧運動！）</h3>
+<p>均勻球殼對殼內質點無淨力，故在半徑 r 處只有半徑 r 以內的質量 \(M_{ins}\) 產生引力。設密度 \(\rho=\dfrac{M}{\frac43\pi R^3}=\dfrac{M_{ins}}{\frac43\pi r^3}\) 為常數：</p>
+<div class="eq">\[F=G\frac{M_{ins}m}{r^2}=\frac{GMm}{R^3}\,r\quad\Rightarrow\quad \vec F=-K\vec r\quad(\text{虎克定律！})\]</div>
+<p>這正是簡諧運動：穿過地心隧道的膠囊會像彈簧上的物塊來回振盪。</p>
+
+<h3 id="pe">A8. 重力位能 U = −GMm/r</h3>
+<p>由重力作功積分 \(\Delta U=-\int \vec F\cdot d\vec r\)。因位能是「一對質點」的性質，最自然的參考點取 \(U=0\) 於 \(r\to+\infty\)：</p>
+<div class="eq">\[U=-\frac{GMm}{r}\]</div>
+<p>多質點系統的總位能為所有<strong>配對</strong>位能之和：</p>
+<div class="eq">\[U=-G\left(\frac{m_1m_2}{r_{12}}+\frac{m_1m_3}{r_{13}}+\frac{m_2m_3}{r_{23}}\right)\]</div>
+
+<h3 id="path">A9. 路徑獨立性</h3>
+<p>重力是<strong>保守力</strong>，作功只取決於初末位置差，與路徑無關；位能變化亦然：\(\Delta U=U_f-U_i=-W\)。</p>
+
+<h3 id="esc">A10. 逃逸速度（Escape Speed）</h3>
+<p>要逃離天體引力，拋體至少要在無窮遠處靜止，即最小總機械能為零：</p>
+<div class="eq">\[K+U=\frac12 mv^2-\frac{GMm}{R}=0\quad\Rightarrow\quad v_{esc}=\sqrt{\frac{2GM}{R}}\]</div>
+<p class="small">註：發射方向不影響逃逸速度大小（只影響軌跡形狀）。</p>
+
+<h3 id="kepler">A11. 克卜勒三定律</h3>
+<table>
+<tr><th>定律</th><th>內容</th></tr>
+<tr><td><strong>軌道定律</strong></td><td>行星沿橢圓軌道運行，太陽在一個焦點上。軌道由半長軸 a 與離心率 e 決定；e=0 為圓。地球 e≈0.0167。</td></tr>
+<tr><td><strong>面積定律</strong></td><td>行星與太陽連線在等時間內掃過等面積，即 \(dA/dt\) 為常數；等價於<strong>角動量守恆</strong>。</td></tr>
+<tr><td><strong>週期定律</strong></td><td>週期平方正比於半長軸三次方：\(T^2\propto a^3\)。</td></tr>
+</table>
+<p>圓軌道由牛頓第二定律 \(G\dfrac{Mm}{r^2}=m\omega^2 r\)、\(\omega=\dfrac{2\pi}{T}\) 得：</p>
+<div class="eq">\[T^2=\left(\frac{4\pi^2}{GM}\right)r^3\]</div>
+<p>橢圓軌道只要把 r 換成半長軸 a 即可。</p>
+
+<h3 id="sat">A12. 衛星軌道與能量</h3>
+<p>把向心加速度 \(v^2/r\) 與重力 \(GMm/r^2\) 關聯，可得能量關係：</p>
+<div class="eq">\[K=\frac12 mv^2=\frac{GMm}{2r}=-\frac{U}{2}\]</div>
+<div class="eq">\[E=K+U=-\frac{GMm}{2r}=-K\quad(\text{圓軌道});\qquad E=-\frac{GMm}{2a}\quad(\text{橢圓，半長軸 }a)\]</div>
+<p>圓軌道與橢圓軌道若 E 相同，則 a 相同（同能量 → 同半長軸）。</p>
+
+<h3 id="einstein">A13. 愛因斯坦的重力觀</h3>
+<ul>
+  <li><strong>等效原理</strong>：重力與加速度等效。關在小盒子裡的物理學家無法分辨「靜止在地球上」與「以 9.8 m/s² 加速穿越星際空間」。</li>
+  <li><strong>時空彎曲</strong>：重力可理解為質量造成的時空彎曲所導致的加速度。</li>
+  <li><strong>重力透鏡</strong>：光經過大質量天體會彎折，極端情形下可看到多重影像或「愛因斯坦環」。</li>
+</ul>
+
+<!-- ================= EXAMPLES A ================= -->
+<h2 id="exA">A 部分例題詳解</h2>
+
+<div class="example">
+<h3>例題 A1 — 三質點的淨重力（二維疊加）</h3>
+<div class="given">
+粒子 1（\(m_1=6.0\ \text{kg}\)）在原點；粒子 2（\(m_2=4.0\ \text{kg}\)）在其正上方距離 \(a\)；粒子 3（\(m_3=4.0\ \text{kg}\)）在其左方距離 \(2a\)；\(a=2.0\ \text{cm}\)。求粒子 1 所受的淨重力。
+</div>
+<div class="fig">
+<svg viewBox="0 0 320 200" width="300">
+  <line x1="30" y1="120" x2="290" y2="120" stroke="#5a6272" stroke-width="1"/>
+  <line x1="160" y1="20" x2="160" y2="185" stroke="#5a6272" stroke-width="1"/>
+  <circle cx="160" cy="120" r="7" fill="#ff9b85"/><text x="168" y="140" fill="#9aa3b2" font-size="12">m₁</text>
+  <circle cx="160" cy="55" r="7" fill="#ffd166"/><text x="168" y="52" fill="#9aa3b2" font-size="12">m₂</text>
+  <circle cx="85" cy="120" r="7" fill="#7ee0a8"/><text x="78" y="140" fill="#9aa3b2" font-size="12">m₃</text>
+  <line x1="160" y1="120" x2="160" y2="70" stroke="#6cc0ff" stroke-width="2"/>
+  <line x1="160" y1="120" x2="105" y2="120" stroke="#6cc0ff" stroke-width="2"/>
+  <text x="168" y="95" fill="#6cc0ff" font-size="11">a</text>
+  <text x="120" y="112" fill="#6cc0ff" font-size="11">2a</text>
+</svg>
+<div class="small">粒子 2 在正上方距離 a；粒子 3 在左方距離 2a</div>
+</div>
+<p class="step"><strong>步驟 1 — 各力大小與方向</strong>（重力皆為吸引，指向對方）：
+\[F_{12}=G\frac{m_1m_2}{a^2}=6.67\times10^{-11}\frac{6.0\times4.0}{(0.020)^2}=4.00\times10^{-6}\ \text{N}\ (\text{向 }+y)\]
+\[F_{13}=G\frac{m_1m_3}{(2a)^2}=6.67\times10^{-11}\frac{6.0\times4.0}{(0.040)^2}=1.00\times10^{-6}\ \text{N}\ (\text{向 }-x)\]</p>
+<p class="step"><strong>步驟 2 — 向量疊加</strong>：\(F_x=-1.00\times10^{-6}\)，\(F_y=+4.00\times10^{-6}\)。</p>
+<div class="eq">\[F_{net}=\sqrt{(1.00)^2+(4.00)^2}\times10^{-6}=4.12\times10^{-6}\ \text{N}\]
+\[\theta=\arctan\frac{4.00}{1.00}=76^\circ\ (\text{在 }-x\text{ 軸上方}) \Rightarrow 104^\circ\ \text{自 }+x\text{ 軸}\]</div>
+<p class="step"><span class="ans">答案：\(F_{net}\approx4.1\times10^{-6}\ \text{N}\)，方向與 \(+x\) 軸夾 \(104^\circ\)（即 \(-x\) 軸上方 \(76^\circ\)）。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 A2 — 自轉對 g 的影響（赤道 vs 極地）</h3>
+<div class="given">
+地球半徑 \(R=6.37\times10^6\ \text{m}\)，自轉角速度 \(\omega=2\pi/86400\approx7.27\times10^{-5}\ \text{s}^{-1}\)。求赤道處 \(g\) 比極地小多少。
+</div>
+<p class="step"><strong>解法</strong>：赤道物體需向心力，量到的重量減少：
+\[g_{\text{measured}}=a_g-\omega^2R\]</p>
+<div class="eq">\[\omega^2R=(7.27\times10^{-5})^2\times6.37\times10^6=5.29\times10^{-9}\times6.37\times10^6\approx0.034\ \text{m/s}^2\]</div>
+<p class="step"><span class="ans">答案：赤道 \(g\) 比極地小約 \(0.034\ \text{m/s}^2\)。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 A3 — 頭與腳的重力加速度差（潮汐力）</h3>
+<div class="given">
+(a) 太空人高 \(h=1.70\ \text{m}\)，頭下腳上漂浮於 \(r=6.77\times10^6\ \text{m}\) 的太空梭軌道。求腳與頭的重力加速度差。
+(b) 同軌道半徑但繞質量 \(M_h=1.99\times10^{31}\ \text{kg}\) 的黑洞（約 10 倍太陽質量）。求腳與頭的重力加速度差。
+</div>
+<p class="step"><strong>思路</strong>：\(a_g=GM/r^2\)，對 r 微分 \(\dfrac{da_g}{dr}=-\dfrac{2GM}{r^3}\)，故相距 h 的兩點差
+\[\Delta a_g\approx\frac{2GM}{r^3}\,h\]</p>
+<p class="step"><strong>(a) 地球</strong>：\(GM_\oplus=3.986\times10^{14}\)，\(r^3=(6.77\times10^6)^3=3.10\times10^{20}\)。
+\[\Delta a_g=\frac{2(3.986\times10^{14})(1.70)}{3.10\times10^{20}}=4.4\times10^{-6}\ \text{m/s}^2\]</p>
+<p class="step"><strong>(b) 黑洞</strong>：\(GM_h=6.67\times10^{-11}\times1.99\times10^{31}=1.33\times10^{21}\)。
+\[\Delta a_g=\frac{2(1.33\times10^{21})(1.70)}{3.10\times10^{20}}=1.5\times10^{1}\ \text{m/s}^2\]</p>
+<p class="step"><span class="ans">答案：(a) ≈ \(4.4\times10^{-6}\ \text{m/s}^2\)（幾乎無感）；(b) ≈ \(15\ \text{m/s}^2\)（足以把人撕裂——潮汐力）。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 A4 — 三質點系統的重力位能</h3>
+<div class="given">
+三個質點 m₁、m₂、m₃，兩兩距離 \(r_{12},r_{13},r_{23}\)。求系統總重力位能。
+</div>
+<p class="step"><strong>解法</strong>：位能是「配對」性質，總和為所有<strong>配對</strong>之和（三對）：</p>
+<div class="eq">\[U=-G\left(\frac{m_1m_2}{r_{12}}+\frac{m_1m_3}{r_{13}}+\frac{m_2m_3}{r_{23}}\right)\]</div>
+<p class="step"><span class="ans">要點：n 個質點有 \(\binom{n}{2}\) 對；每對貢獻一個 \(-Gm_im_j/r_{ij}\)。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 A5 — 小行星墜落（能量守恆求末速）</h3>
+<div class="given">
+小行星以 \(v_i=12\ \text{km/s}\) 朝地球直衝，當時距地心 \(10R\)。忽略大氣，求到達地表時的速率 \(v_f\)（\(R=6.37\times10^6\ \text{m}\)，\(GM=3.986\times10^{14}\)）。
+</div>
+<p class="step"><strong>解法</strong>：機械能守恆（僅重力）：
+\[\frac12 mv_f^2-\frac{GMm}{R}=\frac12 mv_i^2-\frac{GMm}{10R}\]</p>
+<div class="eq">\[v_f^2=v_i^2+\frac{2GM}{R}\left(1-\frac{1}{10}\right)=v_i^2+1.8\frac{GM}{R}\]</div>
+<p class="step"><strong>數值</strong>：\(GM/R=3.986\times10^{14}/6.37\times10^6=6.26\times10^7\)；\(1.8GM/R=1.13\times10^8\)；\(v_i^2=(1.2\times10^4)^2=1.44\times10^8\)。
+\[v_f^2=1.44\times10^8+1.13\times10^8=2.57\times10^8\Rightarrow v_f\approx1.6\times10^4\ \text{m/s}\]</div>
+<p class="step"><span class="ans">答案：\(v_f\approx16\ \text{km/s}\)（比初速 12 km/s 快，因重力加速）。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 A6 — 哈雷彗星（克卜勒週期定律）</h3>
+<div class="given">
+哈雷彗星週期 \(T=76\ \text{年}\)，近日點 \(R_p=8.9\times10^{10}\ \text{m}\)。(a) 求遠日點距離 \(R_a\)；(b) 求離心率 e。（\(M_\odot=1.99\times10^{30}\ \text{kg}\)）
+</div>
+<p class="step"><strong>(a) 半長軸</strong>：由 \(T^2=\dfrac{4\pi^2}{GM}a^3\Rightarrow a=\left(\dfrac{GMT^2}{4\pi^2}\right)^{1/3}\)。先把 T 換秒：\(76\times3.156\times10^7=2.40\times10^9\ \text{s}\)。
+\[a=\left(\frac{(6.67\times10^{-11})(1.99\times10^{30})(2.40\times10^9)^2}{4\pi^2}\right)^{1/3}\approx2.68\times10^{12}\ \text{m}\]</p>
+<p class="step">遠日點 \(R_a=2a-R_p=2(2.68\times10^{12})-8.9\times10^{10}\approx5.3\times10^{12}\ \text{m}\)。</p>
+<p class="step"><strong>(b) 離心率</strong>：\(ea=a-R_p\Rightarrow e=1-\dfrac{R_p}{a}=1-\dfrac{8.9\times10^{10}}{2.68\times10^{12}}\approx0.967\)。</p>
+<p class="step"><span class="ans">答案：(a) \(R_a\approx5.3\times10^{12}\ \text{m}\)；(b) \(e\approx0.967\)（非常扁長的橢圓）。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 A7 — 圓軌道降速成橢圓（週期變化）</h3>
+<div class="given">
+太空船 \(m=4.50\times10^3\ \text{kg}\) 在 \(r=8.00\times10^6\ \text{m}\) 的圓軌道，週期 \(T_0=118.6\ \text{min}\)。推進器把速率降到原速的 96.0%。求新橢圓軌道的週期 T。
+</div>
+<p class="step"><strong>思路</strong>：降速後不再是圓軌道；用能量求新半長軸 a，再由 \(T\propto a^{3/2}\) 求新週期。</p>
+<p class="step"><strong>步驟 1</strong>：圓軌道 \(v_0^2=GM/r\)；新速 \(v=0.96v_0\Rightarrow v^2=0.9216\,GM/r\)。</p>
+<p class="step"><strong>步驟 2</strong>：比能量 \(E/m=\frac12 v^2-\dfrac{GM}{r}\)，而 \(a=-\dfrac{GM}{2(E/m)}\)：
+\[\frac12 v^2-\frac{GM}{r}=\frac{GM}{r}(0.4608-1)=-0.5392\frac{GM}{r}\]
+\[a=\frac{GM}{2(0.5392\,GM/r)}=\frac{r}{2\times0.5392}=0.927\,r\]</p>
+<p class="step"><strong>步驟 3</strong>：\(\dfrac{T}{T_0}=\left(\dfrac{a}{r}\right)^{3/2}=0.927^{1.5}=0.893\)。
+\[T=0.893\times118.6\approx105.9\ \text{min}\]</p>
+<p class="step"><span class="ans">答案：\(T\approx1.06\times10^2\ \text{min}\)（約 106 分鐘）。</span></p>
+</div>
+
+<!-- ================= B. FLUIDS ================= -->
+<h2 id="fa">B. 流體（Fluids）</h2>
+
+<h3 id="whatf">B1. 什麼是流體</h3>
+<p>流體（如水、空氣）能流動並順應容器形狀；它<strong>無法承受剪應力</strong>（平行於表面的力），但可施加<strong>垂直於表面</strong>的力。有些物質（如瀝青）需很長時間才順應容器，仍是流體；流體沒有晶體結構。</p>
+
+<h3 id="rho">B2. 密度（Density）</h3>
+<div class="eq">\[\rho=\frac{\Delta m}{\Delta V}\quad(\text{均勻時 }\rho=\frac{m}{V})\]</div>
+<p>密度是純量，SI 單位 \(\text{kg/m}^3\)。</p>
+
+<h3 id="pres">B3. 壓力（Pressure）</h3>
+<div class="eq">\[p=\frac{\Delta F}{\Delta A}\quad(\text{均勻時 }p=\frac{F}{A})\]</div>
+<p>靜止流體中，任一點各方向的壓力相同，故<strong>靜壓是純量</strong>。SI 單位 \(\text{N/m}^2=\text{Pa}\)。</p>
+
+<h3 id="rest">B4. 靜止流體、絕對壓力與帕斯卡原理</h3>
+<p>考慮靜力平衡的水箱（上面積 A、壓力 p₁；下面積 A、壓力 p₂）：</p>
+<div class="eq">\[F_2=F_1+mg,\quad F_1=p_1A,\ F_2=p_2A,\ m=\rho A(y_1-y_2)\]
+\[p_2=p_1+\rho g(y_1-y_2)\]</div>
+<p>取液面 \(y_1=0,\ p_1=p_0\)，深度 h 處（\(y_2=-h\)）：</p>
+<div class="eq">\[p=p_0+\rho gh\]</div>
+<p>靜止流體中某點的壓力只取決於<strong>深度</strong>，與水平尺寸、容器形狀無關。</p>
+<div class="note">
+<strong>絕對壓力 = 大氣壓 + 錶壓（gauge pressure）</strong>：\(p_{\text{abs}}=p_0+p_g\)。<br>
+<strong>帕斯卡原理</strong>：對密閉不可壓縮流體施壓，壓力變化會<strong>不減弱地</strong>傳遞到各處（\(\Delta p_{\text{ext}}\) 與深度 h 無關）。<br>
+<strong>液壓槓桿</strong>：\(F_o=F_i\dfrac{A_o}{A_i}\)，位移 \(d_o=d_i\dfrac{A_i}{A_o}\)，故輸入作功 = 輸出作功（能量守恆）：可用大力在小位移下換得。
+</div>
+
+<h3 id="arch">B5. 阿基米德原理（Archimedes' Principle）</h3>
+<div class="eq">\[F_b=m_f g\quad(\text{浮力 = 排開流體的重量})\]</div>
+<ul>
+  <li><strong>浮體</strong>：\(F_b=F_g\)，即物重 = 排開流體重。</li>
+  <li><strong>視重</strong>：\(W_{\text{app}}=W_{\text{real}}-F_b\)。</li>
+</ul>
+
+<h3 id="ideal">B6. 理想流體流動（四個假設）</h3>
+<ul>
+  <li><strong>穩流</strong>（steady）：任一定點流速不隨時間變（層流）。</li>
+  <li><strong>不可壓縮</strong>：密度為常數。</li>
+  <li><strong>無黏性</strong>（nonviscous）：無流動阻力（無摩擦）。</li>
+  <li><strong>無旋</strong>（irrotational）：流體元素不繞自身質心旋轉。</li>
+</ul>
+<p><strong>流線</strong>：流體元素所走的路徑；速度與流線相切，故流線<strong>永不相交</strong>（否則一點會有兩個速度）。</p>
+
+<h3 id="cont">B7. 連續方程（Continuity）</h3>
+<p>不可壓縮流體通過任一截面的體積流率必須守恆：</p>
+<div class="eq">\[A_1v_1=A_2v_2=R_V=\text{const}\qquad R_m=\rho R_V=\rho Av=\text{const}\]</div>
+<p>截面積小 → 流速大。</p>
+
+<h3 id="bern">B8. 伯努利方程（Bernoulli）</h3>
+<p>對穩流、不可壓縮、無黏流體，沿流線能量守恆：</p>
+<div class="eq">\[p_1+\frac12\rho v_1^2+\rho g y_1=p_2+\frac12\rho v_2^2+\rho g y_2\]
+\[p+\frac12\rho v^2+\rho g y=\text{const}\]</div>
+<p>直觀：<strong>水平流線上流速越快，壓力越低</strong>（反之亦然）。</p>
+
+<!-- ================= EXAMPLES B ================= -->
+<h2 id="exB">B 部分例題詳解</h2>
+
+<div class="example">
+<h3>例題 B1 — U 型管測油密度</h3>
+<div class="given">
+U 型管兩液體靜力平衡：右臂為水（\(\rho_w=998\ \text{kg/m}^3\)），左臂為未知密度油 \(\rho_x\)。量得 \(l=135\ \text{mm}\)、\(d=12.3\ \text{mm}\)。求油的密度。
+</div>
+<p class="step"><strong>解法</strong>：界面處兩臂壓力相等：
+\[p_{int}=p_0+\rho_w g l=p_0+\rho_x g(l+d)\]</p>
+<div class="eq">\[\rho_w l=\rho_x(l+d)\Rightarrow\rho_x=\rho_w\frac{l}{l+d}=998\times\frac{135}{135+12.3}=998\times0.9165\approx915\ \text{kg/m}^3\]</div>
+<p class="step"><span class="ans">答案：\(\rho_x\approx9.1\times10^2\ \text{kg/m}^3\)（約 915 kg/m³）。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 B2 — 冰山的一角（浮體）</h3>
+<div class="given">
+冰山密度 \(\rho_i=900\ \text{kg/m}^3\)，浮於海水 \(\rho_w=1000\ \text{kg/m}^3\)。露出海面高度 \(d=H-h=2.0\ \text{m}\)（H 為總高，h 為沒入深度）。求沒入深度 h。
+</div>
+<p class="step"><strong>解法</strong>：浮體重量 = 浮力（排開水重）。截面積 A：
+\[\rho_i g H A=\rho_w g h A\Rightarrow\rho_i H=\rho_w h\]
+又 \(H=h+d\)，代入：
+\[\rho_i(h+d)=\rho_w h\Rightarrow h=\frac{\rho_i d}{\rho_w-\rho_i}=\frac{900\times2.0}{1000-900}=18\ \text{m}\]</p>
+<p class="step"><span class="ans">答案：沒入深度 \(h=18\ \text{m}\)（總高 H=20 m，露出僅 2 m——正是「冰山一角」）。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 B3 — 水龍頭水流變細（連續方程 + 能量）</h3>
+<div class="given">
+水從水龍頭落下時「束縮」。上方截面 \(A_0=1.2\ \text{cm}^2\)，下方 \(A=0.35\ \text{cm}^2\)，兩處鉛直相距 \(h=45\ \text{mm}\)。求體積流率。
+</div>
+<p class="step"><strong>步驟 1 — 連續方程</strong>：\(A_0v_0=Av\Rightarrow v=\dfrac{A_0}{A}v_0=k v_0\)，\(k=\dfrac{1.2}{0.35}=3.43\)。</p>
+<p class="step"><strong>步驟 2 — 能量（自由落體）</strong>：\(\frac12 v^2=\frac12 v_0^2+gh\Rightarrow v_0^2=\dfrac{2gh}{k^2-1}\)。
+\[v_0^2=\frac{2(9.8)(0.045)}{3.43^2-1}=\frac{0.882}{10.76}=0.0820\Rightarrow v_0=0.286\ \text{m/s}\]</p>
+<p class="step"><strong>步驟 3 — 體積流率</strong>：\(R_V=A_0v_0=(1.2\times10^{-4})(0.286)=3.4\times10^{-5}\ \text{m}^3/\text{s}\)。</p>
+<p class="step"><span class="ans">答案：\(R_V\approx3.4\times10^{-5}\ \text{m}^3/\text{s}\approx34\ \text{mL/s}\)。</span></p>
+</div>
+
+<div class="example">
+<h3>例題 B4 — 漏水水箱（托里切利定律）</h3>
+<div class="given">
+子彈在敞口水箱水面下 h 處打一個洞。求水從洞口流出的速率 \(v_a\)。
+</div>
+<p class="step"><strong>解法</strong>：取水面（1）與洞口（2）套伯努利方程。兩處皆與大氣接觸，\(p_1=p_2=p_0\)；水面積遠大於洞口，故 \(v_1\ll v_2\)（可視 \(v_1\approx0\)）；洞口取 \(y_2=0\)，水面 \(y_1=h\)：
+\[p_0+\frac12\rho v_1^2+\rho g h=p_0+\frac12\rho v_a^2+0\]
+\[\Rightarrow \frac12\rho v_a^2=\rho g h\Rightarrow v_a=\sqrt{2gh}\]</p>
+<p class="step"><span class="ans">答案：\(v_a=\sqrt{2gh}\)（與自由落體從同高度落下的速率相同——托里切利定律）。</span></p>
+</div>
+
+<!-- ================= SUMMARY ================= -->
+<h2 id="summary">總結</h2>
+<div class="card">
+<strong>A. 重力</strong>
+<ul>
+  <li>萬有引力 \(F=Gm_1m_2/r^2\)；球殼定理（外等效於球心、內淨力為零）。</li>
+  <li>地表 \(a_g=GM/r^2\)；自轉使赤道 g 略小（\(-\omega^2R\approx-0.034\)）。</li>
+  <li>地球內部 \(F\propto -r\)（簡諧運動）。</li>
+  <li>位能 \(U=-GMm/r\)（取無窮遠為 0）；多質點為配對和。</li>
+  <li>逃逸速度 \(v_{esc}=\sqrt{2GM/R}\)。</li>
+  <li>克卜勒：橢圓軌道、等面積（角動量守恆）、\(T^2\propto a^3\)。</li>
+  <li>衛星能量：\(K=-U/2\)，\(E=-GMm/2r\)（圓）或 \(-GMm/2a\)（橢圓）。</li>
+  <li>愛因斯坦：等效原理、時空彎曲、重力透鏡。</li>
+</ul>
+</div>
+<div class="card alt">
+<strong>B. 流體</strong>
+<ul>
+  <li>密度 \(\rho=m/V\)；壓力 \(p=F/A\)（靜壓為純量）。</li>
+  <li>靜止流體 \(p=p_0+\rho gh\)；絕對壓力 = 大氣 + 錶壓。</li>
+  <li>帕斯卡原理與液壓槓桿（省力但費位移，作功不變）。</li>
+  <li>阿基米德：\(F_b=m_f g\)；浮體 \(F_b=F_g\)；視重 \(=W-F_b\)。</li>
+  <li>理想流體四假設；流線不相交。</li>
+  <li>連續方程 \(A_1v_1=A_2v_2\)；伯努利 \(p+\frac12\rho v^2+\rho gy=\text{const}\)。</li>
+</ul>
+</div>
+
+<hr>
+<p class="small">資料來源：UFUG 1501 General Physics I — Module 2 講義（Walker, <em>Physics</em>, 2018, Ch.13 & 14）。本筆記依講義整理為繁體中文並補例題逐步解法；數值取 \(G=6.67\times10^{-11}\)、\(g=9.8\ \text{m/s}^2\)、\(M_\oplus=5.98\times10^{24}\ \text{kg}\)（\(GM=3.986\times10^{14}\)）、\(R_\oplus=6.37\times10^6\ \text{m}\)、\(M_\odot=1.99\times10^{30}\ \text{kg}\)。例題 A1 幾何依講義原圖：粒子 2 在正上方 a、粒子 3 在左方 2a。</p>
+
+</div>
+</body>
+</html>

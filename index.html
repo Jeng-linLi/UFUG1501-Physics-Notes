@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UFUG 1501 普通物理 I — 模組二筆記</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --ink:#e6e9ef; --muted:#9aa3b2;
+    --accent:#6cc0ff; --accent2:#ffd166; --line:#2a2f3a; --ok:#7ee0a8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",system-ui,sans-serif;
+       line-height:1.75;font-size:16px}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 22px 80px}
+  h1{font-size:32px;line-height:1.25;margin:0 0 10px}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:8px}
+  .meta{color:var(--muted);font-size:13px;margin-bottom:36px}
+  .grid{display:grid;gap:18px;grid-template-columns:1fr}
+  @media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+  a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);
+         border:1px solid var(--line);border-radius:14px;padding:22px 24px;transition:border-color .15s,transform .15s}
+  a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .badge{display:inline-block;background:var(--accent);color:#06223a;font-weight:700;
+         border-radius:6px;padding:1px 9px;font-size:12px;margin-bottom:12px}
+  .badge.b2{background:var(--accent2);color:#3a2a00}
+  .card h2{font-size:19px;margin:0 0 8px;color:var(--ink)}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  .tags{margin-top:14px;font-size:12px;color:var(--muted)}
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+         color:var(--muted);font-size:13px}
+  footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>UFUG 1501 普通物理 I — 模組二筆記</h1>
+  <div class="sub">General Physics I · Module 2 · 繁體中文學習筆記</div>
+  <div class="meta">對應教材：Walker, <em>Physics</em> (2018) ｜ 每章附例題逐步詳解</div>
+
+  <div class="grid">
+    <a class="card" href="week5-energy-equilibrium-elasticity.html">
+      <span class="badge">Week 5</span>
+      <h2>位能、能量守恆、平衡與彈性</h2>
+      <p>Potential Energy, Conservation of Energy, Equilibrium &amp; Elasticity（Ch. 8 &amp; 12）</p>
+      <div class="tags">位能 · 保守力 · 力學能守恆 · 位能曲線 · 靜力平衡 · 應力與應變 · 8 道例題</div>
+    </a>
+    <a class="card" href="week7-gravitation-fluids.html">
+      <span class="badge b2">Week 7</span>
+      <h2>重力與流體</h2>
+      <p>Gravitation &amp; Fluids（Ch. 13 &amp; 14）</p>
+      <div class="tags">萬有引力 · 克卜勒定律 · 逃逸速度 · 靜壓 · 阿基米德 · 連續方程 · 伯努利 · 11 道例題</div>
+    </a>
+  </div>
+
+  <footer>
+    內容依課堂講義整理，公式以 MathJax 渲染。例題數值取 g = 9.8 m/s²、G = 6.67×10⁻¹¹ 等標準常數。<br>
+    Source: UFUG 1501 lecture slides (Walker 2018, Ch. 8/12/13/14).
+  </footer>
+</div>
+</body>
+</html>

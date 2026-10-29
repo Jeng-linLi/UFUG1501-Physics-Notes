@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UFUG 1501 普通物理 I — 模組二筆記（位能、能量守恆、平衡與彈性）</title>
+<script>
+  MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js" async></script>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --ink:#e6e9ef; --muted:#9aa3b2;
+    --accent:#6cc0ff; --accent2:#ffd166; --line:#2a2f3a; --ok:#7ee0a8; --warn:#ff9b85;
+    --code:#cdd6e4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",system-ui,sans-serif;
+       line-height:1.75;font-size:16px}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 22px 80px}
+  h1{font-size:28px;line-height:1.3;margin:0 0 6px}
+  h2{font-size:22px;margin:42px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--accent);color:var(--accent)}
+  h3{font-size:18px;margin:30px 0 8px;color:var(--accent2)}
+  h4{font-size:16px;margin:20px 0 6px;color:var(--ink)}
+  p{margin:10px 0}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .card.alt{background:var(--panel2)}
+  .tag{display:inline-block;background:var(--accent);color:#06223a;font-weight:700;
+       border-radius:6px;padding:1px 9px;font-size:13px;margin-right:8px}
+  .tag.warn{background:var(--warn);color:#3a0d05}
+  .tag.ok{background:var(--ok);color:#06321d}
+  ul,ol{padding-left:22px}
+  li{margin:6px 0}
+  code{background:#222733;color:var(--code);padding:2px 6px;border-radius:5px;font-size:14px}
+  .eq{background:#10131a;border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:12px 0;overflow-x:auto}
+  .note{background:rgba(108,192,255,.08);border-left:4px solid var(--accent);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0}
+  .note.warn{background:rgba(255,155,133,.08);border-left-color:var(--warn)}
+  .example{background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.35);border-radius:12px;padding:18px 20px;margin:22px 0}
+  .example h3{color:var(--accent2);margin-top:0}
+  .given{background:#10131a;border:1px dashed var(--line);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:15px}
+  .ans{font-weight:700;color:var(--ok)}
+  .step{margin:8px 0;padding-left:4px}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+  th{background:var(--panel2);color:var(--accent)}
+  .toc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+  .toc a{color:var(--accent);text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .small{font-size:13px;color:var(--muted)}
+  hr{border:none;border-top:1px solid var(--line);margin:28px 0}
+  .formula-key{color:var(--accent2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>UFUG 1501 普通物理 I — 模組二筆記</h1>
+<div class="sub">主題：位能、能量守恆、平衡與彈性 ｜ 對應教材 Walker (2018) 第 8、12 章 ｜ 授課教師：Qing Li 助理教授<br>
+本筆記將講義內容整理為繁體中文，並附 8 道例題的完整逐步詳解。</div>
+
+<div class="toc">
+<strong>目錄</strong>
+<ol>
+  <li><a href="#info">課程資訊與大綱</a></li>
+  <li><a href="#p1">第一部分：位能與能量守恆</a>
+    <ul>
+      <li><a href="#u">1. 位能的意義</a> ｜ <a href="#du">2. ΔU = −W</a> ｜ <a href="#cf">3. 保守力 vs 非保守力</a></li>
+      <li><a href="#path">4. 路徑獨立性</a> ｜ <a href="#grav">5. 重力位能 U=mgz</a> ｜ <a href="#elas">6. 彈力位能 U=½kx²</a></li>
+      <li><a href="#mec">7. 力學能守恆</a> ｜ <a href="#curve">8. 位能曲線</a> ｜ <a href="#ext">9. 外力作功</a></li>
+      <li><a href="#cons">10. 能量守恆定律</a> ｜ <a href="#power">11. 功率</a></li>
+    </ul>
+  </li>
+  <li><a href="#ex1">例題詳解（一）：滑溜起司、樹懶、單擺、水上滑梯、遊樂園滑道</a></li>
+  <li><a href="#p2">第二部分：平衡與彈性</a>
+    <ul>
+      <li><a href="#eq">12. 平衡定義與分類</a> ｜ <a href="#req">13. 平衡條件</a> ｜ <a href="#cog">14. 重心 vs 質心</a></li>
+      <li><a href="#stex">15. 靜力平衡例題（梯子、比薩斜塔）</a> ｜ <a href="#elastic">16. 應力與應變</a> ｜ <a href="#mod">17. 三種模量</a></li>
+    </ul>
+  </li>
+  <li><a href="#ex2">例題詳解（二）：搖晃桌子</a></li>
+  <li><a href="#summary">總結</a></li>
+</ol>
+</div>
+
+<!-- ===================== INFO ===================== -->
+<h2 id="info">一、課程資訊與大綱</h2>
+<div class="card">
+<ul>
+  <li><strong>課程</strong>：UFUG 1501 General Physics I — Module 2</li>
+  <li><strong>教師</strong>：Qing Li（地球、海洋與大氣科學方向，Function Hub 助理教授）</li>
+  <li><strong>Office hour</strong>：週五 13:30–15:30，W4-510</li>
+  <li><strong>輔導課（Tutorial）</strong>：10/29、11/12，12:30–13:20，W1-233</li>
+  <li><strong>模組測驗 #2</strong>：11/21</li>
+  <li><strong>作業 2 與 AI Tutor 作業</strong>：截止 10/23 23:59</li>
+</ul>
+</div>
+<div class="card alt">
+<strong>本章大綱</strong>
+<ol>
+  <li>位能與能量守恆（Potential Energy and Conservation of Energy）</li>
+  <li>平衡與彈性（Equilibrium and Elasticity）</li>
+</ol>
+</div>
+
+<!-- ===================== PART 1 ===================== -->
+<h2 id="p1">第二部分（講義稱 Module 2）第一部分：位能與能量守恆</h2>
+
+<h3 id="u">1. 位能（Potential Energy）的意義</h3>
+<p><span class="formula-key">位能 U</span> 是與「一個由彼此施力之物件所組成系統的組態（configuration）」相關聯的能量。關鍵在於：位能屬於<strong>整個系統</strong>，而不是單一物體。</p>
+<div class="note">
+例：彈跳蹦極（bungee）
+<ul>
+  <li><strong>地球 + 跳者</strong> 系統：重力位能解釋下落時動能的增加。</li>
+  <li><strong>彈索 + 跳者</strong> 系統：彈性位能解釋彈索把人減速的過程。</li>
+</ul>
+所以談論位能時，一定要先界定「系統是誰跟誰」。
+</div>
+
+<h3 id="du">2. 位能變化與作功：ΔU = −W</h3>
+<p>當一個物件被舉高或放下時，重力位能的變化量等於重力所作功的<strong>負值</strong>：</p>
+<div class="eq">\[\Delta U = -\,W\]</div>
+<p>也就是：物體上升 → 重力做負功 → 位能增加；物體下降 → 重力做正功 → 位能減少。這個關係同樣適用於<strong>彈簧–物塊系統</strong>（彈性位能）。</p>
+<div class="note">
+關鍵要素（以「番茄–地球」與「物塊–彈簧」兩個系統為例）：
+<ul>
+  <li>系統由兩個以上物件組成。</li>
+  <li>粒子（番茄／物塊）與系統其餘部分之間存在一種力（重力／彈力）。</li>
+  <li>組態改變（番茄高度／彈簧長度）時，該力作功 \(W_1\)，把動能轉成另一種形式。</li>
+  <li>若逆向改變組態，該力作功 \(W_2\)，把能量轉回來。</li>
+  <li>對保守力而言：\(W_1 = -W_2\)。</li>
+</ul>
+</div>
+
+<h3 id="cf">3. 保守力與非保守力</h3>
+<table>
+<tr><th>類型</th><th>定義</th><th>例子</th></tr>
+<tr><td><strong>保守力</strong><br>(Conservative)</td><td>恆滿足 \(W_1 = -W_2\) 的力；可定義對應的位能</td><td>重力、彈簧力</td></tr>
+<tr><td><strong>非保守力</strong><br>(Nonconservative)</td><td>不滿足上式；所作的功會轉成無法經由該力回收的能量</td><td>動摩擦力、空氣阻力（drag）</td></tr>
+</table>
+<div class="note warn">
+摩擦力是<strong>非保守</strong>的：動摩擦力把物體動能轉成熱（thermal energy），而熱能無法透過摩擦力再變回物體的動能。因此「熱能」不是一種位能。
+</div>
+
+<h3 id="path">4. 保守力的路徑獨立性（Path Independence）</h3>
+<p>對保守力有兩個等價說法：</p>
+<ul>
+  <li>粒子沿<strong>任意封閉路徑</strong>繞一圈，保守力所作的淨功為零。</li>
+  <li>粒子從 a 點到 b 點，保守力所作的功<strong>與路徑無關</strong>：</li>
+</ul>
+<div class="eq">\[W_{ab,1} = W_{ab,2}\]</div>
+<p>實用意義：只要系統中<strong>只有保守力</strong>，我們可以把複雜路徑替換成一條方便計算的簡單路徑（例如把彎曲軌道換成「水平 + 垂直」兩段）。</p>
+
+<h3 id="grav">5. 重力位能 U = mgz</h3>
+<p>一般情形，位能變化由積分給出：</p>
+<div class="eq">\[\Delta U = -\int_{\vec x_i}^{\vec x_f} \vec F(x)\cdot d\vec x\]</div>
+<p>對重力（取參考點 \(z=0\)）積分後得到：</p>
+<div class="eq">\[U(z) = mgz\]</div>
+<p>重點：重力位能只取決於相對於參考點的<strong>鉛直位置 z（高度）</strong>，與水平位置無關。這正是路徑獨立性的具體展現。</p>
+
+<h3 id="elas">6. 彈力位能 U = ½kx²</h3>
+<p>對彈簧（彈力 \(F = -kx\)，取放鬆狀態 \(x=0\) 為參考點）：</p>
+<div class="eq">\[\Delta U = -\int_{x_i}^{x_f}(-kx)\,dx = \frac{1}{2}kx_f^2-\frac{1}{2}kx_i^2\]</div>
+<p>取 \(x_i=0\) 時 \(U=0\)，得：</p>
+<div class="eq">\[U(x)=\frac{1}{2}kx^2\]</div>
+<div class="note">參考點的選取是任意的（重力取 \(z=0\)，彈簧取 \(x=0\) 最方便），但<strong>位能的「差值」不受參考點影響</strong>——這點在例題 2 會驗證。</div>
+
+<h3 id="mec">7. 力學能守恆（Conservation of Mechanical Energy）</h3>
+<p>系統的<strong>力學能</strong> \(E_{mec}\) 是動能 K 與位能 U 之和：</p>
+<div class="eq">\[E_{mec}=K+U\]</div>
+<p>保守力作功 \(W\) 讓 K 增加、U 减少相同量：\(\Delta K = -\Delta U = W\)。在一個<strong>只有保守力造成能量變化</strong>的孤立系統中：</p>
+<div class="eq">\[\Delta E_{mec}=\Delta K+\Delta U=0\]</div>
+<p>因此可在兩個時刻之間直接寫：</p>
+<div class="eq">\[K_1+U_1 = K_2+U_2\]</div>
+<p>優點：不必管中間過程怎麼動，直接從初態跳到末態。</p>
+
+<h3 id="curve">8. 位能曲線（Potential Energy Curve）</h3>
+<p>一維運動中，力與位能由功的關係相連。取微分極限得：</p>
+<div class="eq">\[F(x)=-\frac{dU(x)}{dx}\]</div>
+<p>也就是：<strong>力 = 位能曲線斜率的負值</strong>。可由 U(x) 圖讀出力。</p>
+<h4>轉折點（Turning Points）</h4>
+<p>因 \(E_{mec}\) 為常數，動能隨位置變化：</p>
+<div class="eq">\[K(x)=E_{mec}-U(x)\]</div>
+<p>當 \(K=0\) 之處即為轉折點，粒子到此反向（K 不能為負）。</p>
+<h4>平衡點（Equilibrium Points）</h4>
+<ul>
+  <li>平衡點處 \(dU/dx=0\)，合力為零，粒子靜止（只有位能）。</li>
+  <li><strong>中性平衡</strong>：稍微移開後停在新位置（如桌上彈珠）。</li>
+  <li><strong>不穩定平衡</strong>：稍偏即被推離（如保齡球頂上的彈珠）。</li>
+  <li><strong>穩定平衡</strong>：稍偏即被拉回原處（如碗底的彈珠）。</li>
+</ul>
+
+<h3 id="ext">9. 外力對系統作功</h3>
+<p>對多粒子系統，外力作功可同時改變 K 與 U。分兩種情形：</p>
+<table>
+<tr><th>情形</th><th>公式</th></tr>
+<tr><td>無摩擦</td><td>\(W = \Delta K+\Delta U = \Delta E_{mec}\)</td></tr>
+<tr><td>有摩擦</td><td>\(W = \Delta E_{mec}+\Delta E_{th}\)，其中 \(\Delta E_{th}=f_k d\)（滑動摩擦產生的熱能增加）</td></tr>
+</table>
+
+<h3 id="cons">10. 能量守恆定律（孤立系統）</h3>
+<p>總能量 \(E\) 含機械能、熱能與其他內能。對<strong>孤立系統</strong>（無外部能量轉移）：</p>
+<div class="eq">\[\Delta E=\Delta E_{mec}+\Delta E_{th}+\Delta E_{int}=0\]</div>
+<p>能量只在系統<strong>內部</strong>互相轉換，總和不變。可跨時刻直接比較總能量，不需管中間過程。</p>
+<div class="note warn">
+<strong>外力可不作功！</strong>兩個經典例子：
+<ul>
+  <li>滑冰者推牆：牆給她的力改變了她的 K，但牆沒提供能量、對她作功為零（能量來自她肌肉內化學能）。</li>
+  <li>四輪傳動汽車加速：路面摩擦力推輪胎向前使 K 增加，但路面沒提供能量、作功為零（能量來自引擎）。</li>
+</ul>
+</div>
+
+<h3 id="power">11. 功率（Power）</h3>
+<p>廣義上功率是「能量被力轉換的速率」：</p>
+<div class="eq">\[P_{avg}=\frac{\Delta E}{\Delta t},\qquad P=\frac{dE}{dt}\]</div>
+
+<!-- ===================== EXAMPLES PART 1 ===================== -->
+<h2 id="ex1">例題詳解（一）</h2>
+
+<div class="example">
+<h3>例題 1 — 滑溜起司（路徑獨立性）</h3>
+<div class="given">
+已知：質量 \(m=2.0\ \text{kg}\) 的起司沿<strong>無摩擦</strong>軌道從 a 滑到 b；沿軌道總路程 \(2.0\ \text{m}\)；<strong>淨鉛直距離</strong> \(0.80\ \text{m}\)。求：重力對起司所作之功。
+</div>
+<p class="step"><strong>思路</strong>：重力是保守力，作功只與鉛直位移有關，與 2.0 m 的彎曲路徑長度<strong>無關</strong>。</p>
+<p class="step"><strong>解法</strong>：設 b 比 a 低 \(0.80\ \text{m}\)（下滑），則重力作正功</p>
+<div class="eq">\[W = mg(\Delta h)=2.0\times 9.8\times 0.80 = 15.68\ \text{J}\approx 15.7\ \text{J}\]</div>
+<p class="step"><span class="ans">答案：約 \(1.6\times10^{1}\ \text{J}\)（15.7 J）。</span> 若 b 比 a 高，則功為負值，大小相同。</p>
+</div>
+
+<div class="example">
+<h3>例題 2 — 樹懶（參考點的選擇）</h3>
+<div class="given">
+已知：樹懶質量 \(m=2.0\ \text{kg}\)，懸掛在離地 \(5.0\ \text{m}\) 處。
+(a) 若取 \(z=0\) 參考點分別在：(1) 地面、(2) 離地 3.0 m 的陽台地板、(3) 樹枝、(4) 樹枝上方 1.0 m，求樹懶–地球系統的重力位能 U（U=0 在 \(z=0\)）。
+(b) 樹懶落到地面，對上述四種參考點分別求位能變化 \(\Delta U\)。
+</div>
+<p class="step"><strong>解法 (a)</strong>：先算出樹懶相對各參考點的座標 z（向上為正），再代入 \(U=mgz\)（\(g=9.8\)）。</p>
+<table>
+<tr><th>參考點</th><th>樹懶的 z</th><th>\(U=mgz\)</th></tr>
+<tr><td>(1) 地面</td><td>\(5.0\ \text{m}\)</td><td>\(2.0\times9.8\times5.0=98\ \text{J}\)</td></tr>
+<tr><td>(2) 陽台(+3.0 m)</td><td>\(5.0-3.0=2.0\ \text{m}\)</td><td>\(2.0\times9.8\times2.0=39.2\ \text{J}\)</td></tr>
+<tr><td>(3) 樹枝</td><td>\(0\)</td><td>\(0\)</td></tr>
+<tr><td>(4) 樹枝上方 1.0 m<br>(即離地 6.0 m)</td><td>\(5.0-6.0=-1.0\ \text{m}\)</td><td>\(2.0\times9.8\times(-1.0)=-19.6\ \text{J}\)</td></tr>
+</table>
+<p class="step"><strong>解法 (b)</strong>：樹懶從離地 5.0 m 落到 0 m，對各參考點，地面座標分別為 0、−3.0、−5.0、−6.0 m；初態座標同 (a)。</p>
+<table>
+<tr><th>參考點</th><th>\(z_i\)</th><th>\(z_f\)（地面）</th><th>\(\Delta U=mg(z_f-z_i)\)</th></tr>
+<tr><td>(1)</td><td>5.0</td><td>0</td><td>\(mg(0-5.0)=-98\ \text{J}\)</td></tr>
+<tr><td>(2)</td><td>2.0</td><td>−3.0</td><td>\(mg(-5.0)=-98\ \text{J}\)</td></tr>
+<tr><td>(3)</td><td>0</td><td>−5.0</td><td>\(mg(-5.0)=-98\ \text{J}\)</td></tr>
+<tr><td>(4)</td><td>−1.0</td><td>−6.0</td><td>\(mg(-5.0)=-98\ \text{J}\)</td></tr>
+</table>
+<p class="step"><span class="ans">答案</span>：(a) 98 J、39.2 J、0、−19.6 J；(b) 四種情形 \(\Delta U\) 皆為 <strong>−98 J</strong>。</p>
+<div class="note">重點：位能<strong>絕對值</strong>依參考點而變（甚至可為負），但<strong>位能變化 ΔU 與參考點無關</strong>。物理上真正重要的是差值。</div>
+</div>
+
+<div class="example">
+<h3>例題 3 — 單擺（力學能守恆概念）</h3>
+<div class="given">
+單擺：取最低點為 \(U=0\)。在最高點時 \(U=U_{max}\)、\(K=0\)。
+</div>
+<p class="step"><strong>分析</strong>：整個擺動週期中力學能守恆。最低點全部為動能，最高點全部為位能：</p>
+<div class="eq">\[K_{max}+0 = 0+U_{max}\quad\Rightarrow\quad K_{max}=U_{max}\]</div>
+<p class="step">若已知擺長 \(L\) 與最大擺角 \(\theta\)，最高點高度 \(h=L(1-\cos\theta)\)，則 \(U_{max}=mgL(1-\cos\theta)=\frac12 mv_{max}^2\)，可反求最低點速率。</p>
+<p class="step"><span class="ans">結論</span>：單擺是「動能 ↔ 重力位能」互換的標準模型，總力學能不變。</p>
+</div>
+
+<div class="example">
+<h3>例題 4 — 水上滑梯（求末速）</h3>
+<div class="given">
+兒童質量 \(m\)，自靜止從滑梯頂釋放，頂端離底高度 \(h=8.5\ \text{m}\)。滑梯因有水而視為無摩擦。求：到達底部時的速率。
+</div>
+<p class="step"><strong>解法</strong>：取底部為 \(U=0\)。初態 \(K_1=0,\ U_1=mgh\)；末態 \(K_2=\frac12 mv^2,\ U_2=0\)。力學能守恆：</p>
+<div class="eq">\[mgh = \frac12 mv^2 \quad\Rightarrow\quad v=\sqrt{2gh}\]</div>
+<div class="eq">\[v=\sqrt{2\times 9.8\times 8.5}=\sqrt{166.6}\approx 12.9\ \text{m/s}\]</div>
+<p class="step"><span class="ans">答案：約 \(12.9\ \text{m/s}\)。</span> 注意質量 m 消掉了——末速與兒童體重無關。</p>
+</div>
+
+<div class="example">
+<h3>例題 5 — 遊樂園滑水道（彈簧 + 重力 + 摩擦）</h3>
+<div class="given">
+滑翔機＋乘客總質量 \(m=200\ \text{kg}\)；彈簧初始壓縮 \(d=5.00\ \text{m}\)；彈簧常數 \(k=3.20\times10^{3}\ \text{N/m}\)；初始高度 \(h=35.0\ \text{m}\)；地面段動摩擦係數 \(\mu_k=0.800\)。求：滑翔機在地面段因摩擦停止前滑行的距離 \(L\)。
+</div>
+<p class="step"><strong>思路</strong>：先由彈簧 + 重力把系統推到地面（此段無摩擦，力學能守恆），到地面時全部能量轉為動能；接著地面段摩擦把這些能量全部耗成熱能。</p>
+<p class="step"><strong>步驟 1 — 初始總機械能</strong>（彈簧位能 + 重力位能，地面為 \(U=0\)）：</p>
+<div class="eq">\[E_{初始}=\frac12 kd^2+mgh\]</div>
+<div class="eq">\[\frac12(3.20\times10^3)(5.00)^2=0.5\times3200\times25=4.00\times10^4\ \text{J}\]</div>
+<div class="eq">\[(200)(9.8)(35.0)=6.86\times10^4\ \text{J}\]</div>
+<div class="eq">\[E_{初始}=4.00\times10^4+6.86\times10^4=1.086\times10^5\ \text{J}\]</div>
+<p class="step"><strong>步驟 2 — 地面段摩擦耗散</strong>：水平面上正向力 \(N=mg\)，摩擦力 \(f_k=\mu_k mg\)，熱能增加 \(\Delta E_{th}=f_k L=\mu_k mgL\)。停止時全部能量耗盡：</p>
+<div class="eq">\[\mu_k mgL = E_{初始}\]</div>
+<div class="eq">\[L=\frac{1.086\times10^5}{0.800\times200\times9.8}=\frac{1.086\times10^5}{1568}\approx 69.3\ \text{m}\]</div>
+<p class="step"><span class="ans">答案：\(L\approx 69.3\ \text{m}\)。</span></p>
+<div class="note">本題綜合運用：彈力位能、重力位能、力學能守恆、以及「有摩擦時 \(W=\Delta E_{mec}+\Delta E_{th}\)」。</div>
+</div>
+
+<!-- ===================== PART 2 ===================== -->
+<h2 id="p2">第二部分：平衡與彈性</h2>
+
+<h3 id="eq">12. 平衡（Equilibrium）的定義與分類</h3>
+<p>物體滿足以下特徵即處於平衡（若 \(\vec P=0\) 且 \(\vec L=0\) 則為<strong>靜力平衡</strong>）：</p>
+<ul>
+  <li>質心線動量為常數：\(\vec P=\text{const}\)</li>
+  <li>對質心（或任意點）的角動量為常數：\(\vec L=\text{const}\)</li>
+</ul>
+<p>依「輕微位移後是否回復」分類（同前述位能曲線）：</p>
+<ul>
+  <li><strong>穩定靜平衡</strong>：輕微位移後會回到原平衡（如看似危險其實很穩的石頭）。</li>
+  <li><strong>不穩定平衡</strong>：微小位移即破壞平衡（如骨牌直立）。</li>
+  <li><strong>中性平衡</strong>：移到新位置仍平衡（如桌上彈珠）。</li>
+</ul>
+<div class="note">穩定度比較：骨牌（不穩定） ≺ 推過臨界點才倒的骨牌 ≺ 方塊（更穩）。底面積越大、重心越低越穩。</div>
+
+<h3 id="req">13. 平衡的條件（Requirements of Equilibrium）</h3>
+<p>由牛頓第二定律（平動與轉動形式）給出：</p>
+<div class="eq">\[\vec F_{net}=0\quad\text{（合力為零）},\qquad \vec\tau_{net}=0\quad\text{（對任意點合力矩為零）}\]</div>
+<p>靜力平衡額外要求：</p>
+<div class="eq">\[\vec P=0,\qquad \vec L=0\]</div>
+
+<h3 id="cog">14. 重心（Center of Gravity）vs 質心（Center of Mass）</h3>
+<p>重力可視為作用於單一點——<strong>重心（cog）</strong>。日常情形下若物體各處 \(g\) 相同，則重心與質心（com）重合：</p>
+<div class="eq">\[\vec x_{cog}=\frac{\sum x_i m_i g_i}{\sum m_i g_i}\ \xrightarrow{g_i=g}\ \frac{\sum x_i m_i}{\sum m_i}=\vec x_{com}\]</div>
+<p>因此本課程中通常可直接以質心代替重心計算。</p>
+
+<h3 id="stex">15. 靜力平衡例題（詳見例題 6、7）</h3>
+<p>常見題型：取適當支點列力矩平衡，搭配力平衡解出未知支承力。關鍵技巧：<strong>選未知力通過的點當支點</strong>，可消去該力、減少未知數。</p>
+
+<h3 id="elastic">16. 彈性：應力與應變</h3>
+<p>所有「剛體」其實都有部分彈性，施力可改變其尺寸。<strong>應力（stress）</strong>＝單位面積的變形力；<strong>應變（strain）</strong>＝單位變形量。</p>
+<div class="eq">\[\text{stress}=\text{modulus}\times\text{strain}\]</div>
+<p>在彈性範圍內應力與應變成正比（虎克定律推廣）。超過<strong>降伏強度（yield strength）</strong>會永久變形；到<strong>極限強度（ultimate strength）</strong>則斷裂。三種主要應力：(a) 拉伸/壓縮 (b) 剪應力 (c) 液壓應力。</p>
+
+<h3 id="mod">17. 三種彈性模量</h3>
+<table>
+<tr><th>類型</th><th>模量</th><th>關係式</th><th>符號意義</th></tr>
+<tr><td>拉伸 / 壓縮</td><td>楊氏模量 \(E\)</td><td>\(\dfrac{F/A}{\Delta L/L}=E\)</td><td>F 軸向力，A 截面積，L 原長，ΔL 伸長</td></tr>
+<tr><td>剪應力</td><td>剛性模量 \(G\)</td><td>\(\dfrac{F/A}{\Delta x/L}=G\)</td><td>Δx 沿垂直於 L 的方向位移</td></tr>
+<tr><td>液壓壓縮</td><td>體積模量 \(B\)</td><td>\(p=B\,\dfrac{\Delta V}{V}\)</td><td>p 壓力，V 體積，ΔV 體積變化</td></tr>
+</table>
+<div class="note">同一材料拉伸與壓縮常數模量相同，但<strong>強度</strong>可能差很多，例如混凝土：抗壓很強、抗張極弱。</div>
+
+<!-- ===================== EXAMPLES PART 2 ===================== -->
+<h2 id="ex2">例題詳解（二）</h2>
+
+<div class="example">
+<h3>例題 6 — 斜靠的梯子（靜力平衡）</h3>
+<div class="given">
+梯子長 \(L=12\ \text{m}\)，質量 \(m=45\ \text{kg}\)；靠在<strong>光滑牆</strong>（牆–梯無摩擦）上；梯頂離地高度 \(h=9.3\ \text{m}\)；梯子質心位於距底端沿梯長 \(L/3\) 處。消防員質量 \(M=72\ \text{kg}\) 爬到其質心距底端 \(L/2\) 處。求：牆與地面對梯子的力的<strong>大小</strong>。
+</div>
+<p class="step"><strong>幾何</strong>：底端到牆的水平距離 \(x=\sqrt{L^2-h^2}=\sqrt{144-86.49}=7.584\ \text{m}\)。梯與水平夾角 \(\theta\)：\(\cos\theta=x/L=0.632,\ \sin\theta=h/L=0.775\)。</p>
+<p class="step"><strong>受力分析</strong>：
+<ul>
+  <li>牆：只有水平正向力 \(F_w\)（向左推梯子）。</li>
+  <li>地面：水平摩擦力 \(f_p\)（向右）+ 鉛直正向力 \(N_p\)（向上）。</li>
+  <li>梯子重力 \(mg\) 作用於 \(L/3\) 處；消防員重力 \(Mg\) 作用於 \(L/2\) 處。</li>
+</ul></p>
+<p class="step"><strong>力平衡</strong>：
+\(\sum F_y=0\Rightarrow N_p=mg+Mg=(45+72)\times9.8=1146.6\ \text{N}\)；
+\(\sum F_x=0\Rightarrow f_p=F_w\)。</p>
+<p class="step"><strong>力矩平衡</strong>：取底端為支點（消去 \(f_p, N_p\)）。各重力對底端的力臂為其水平距離：
+<ul>
+  <li>梯子重力力臂：\((L/3)\cos\theta=4\times0.632=2.528\ \text{m}\)</li>
+  <li>消防員重力力臂：\((L/2)\cos\theta=6\times0.632=3.792\ \text{m}\)</li>
+  <li>牆力 \(F_w\) 力臂：\(h=9.3\ \text{m}\)（水平力 × 高度）</li>
+</ul>
+\[\sum\tau=0:\quad F_w\cdot h - mg(2.528)-Mg(3.792)=0\]</p>
+<div class="eq">\[F_w=\frac{441\times2.528+705.6\times3.792}{9.3}=\frac{1114.8+2675.6}{9.3}=\frac{3790.4}{9.3}\approx 407.5\ \text{N}\]</div>
+<p class="step">故 \(f_p=407.5\ \text{N}\)。地面作用力為摩擦力與正向力的合力：</p>
+<div class="eq">\[F_{地面}=\sqrt{f_p^2+N_p^2}=\sqrt{407.5^2+1146.6^2}=\sqrt{166056+1314692}\approx 1217\ \text{N}\]</div>
+<p class="step"><span class="ans">答案</span>：牆對梯子作用力 <strong>≈ 408 N</strong>（水平）；地面对梯子作用力 <strong>≈ 1.22×10³ N</strong>（合力）。</p>
+</div>
+
+<div class="example">
+<h3>例題 7 — 比薩斜塔（重心偏移與支承力）</h3>
+<div class="given">
+視比薩斜塔為均勻空心圓柱：半徑 \(R=9.8\ \text{m}\)，高 \(h=60\ \text{m}\)；質心在軸上 \(h/2\) 處。向右（南）傾斜 \(\theta=5.5^\circ\)，使質心水平偏移 \(d\)。地面只在左右兩壁施加兩個正向力：\(F_{NL}\)（左/北）、\(F_{NR}\)（右/南）。求：因傾斜，\(F_{NR}\) 增加了百分之幾？
+</div>
+<p class="step"><strong>質心偏移</strong>：軸傾斜 \(\theta\)，高度 \(h/2\) 處的質心水平位移
+\(d=(h/2)\sin\theta=30\times\sin5.5^\circ=30\times0.09585=2.875\ \text{m}\)。</p>
+<p class="step"><strong>直立時</strong>：對稱，\(F_{NL}=F_{NR}=W/2\)（\(W=Mg\)）。</p>
+<p class="step"><strong>傾斜時</strong>：兩支承力作用點相距 \(2R=19.6\ \text{m}\)。對左壁取力矩平衡（順時針為正）：
+\[F_{NR}(2R)-W(R+d)=0\quad\Rightarrow\quad F_{NR}=W\frac{R+d}{2R}=W\left(\frac12+\frac{d}{2R}\right)\]
+直立時 \(F_{NR,0}=W/2\)，增加量 \(\Delta F_{NR}=W\dfrac{d}{2R}\)。</p>
+<p class="step"><strong>百分比增加</strong>：
+\[\frac{\Delta F_{NR}}{F_{NR,0}}\times100\%=\frac{d/R}{1}\times100\%=\frac{2.875}{9.8}\times100\%\approx 29.3\%\]</p>
+<p class="step"><span class="ans">答案：因傾斜，\(F_{NR}\) 約增加 29.3%。</span></p>
+<div class="note">直觀：質心越往支承邊緣偏，那一側地面要出的力越大；偏移量與半徑之比決定了百分比增幅。</div>
+</div>
+
+<div class="example">
+<h3>例題 8 — 搖晃的桌子（彈性壓縮）</h3>
+<div class="given">
+桌子三隻腳長 \(L=1.00\ \text{m}\)，第四隻腳長多出 \(d=0.50\ \text{mm}=5.0\times10^{-4}\ \text{m}\)，故會搖晃。放上一個質量 \(M=290\ \text{kg}\) 的鋼 cylinder（桌子質量 ≪ M）後，四隻腳都被壓縮、桌面水平且不搖。桌腳為木質圓柱，截面積 \(A=1.0\ \text{cm}^2=1.0\times10^{-4}\ \text{m}^2\)，楊氏模量 \(E=1.3\times10^{10}\ \text{N/m}^2\)。求：地面對各腳的作用力大小。
+</div>
+<p class="step"><strong>關鍵観察</strong>：桌面剛性且水平，四腳末端都著地，故壓縮後四腳<strong>最終長度相同</strong>。設三隻短腳壓縮 \(\Delta x_s\)，長腳壓縮 \(\Delta x_\ell\)，則
+\(\Delta x_\ell=\Delta x_s+d\)（長腳多壓了原始長度差 d）。</p>
+<p class="step"><strong>力–壓縮關係（楊氏模量）</strong>：\(F=\dfrac{EA}{L}\Delta x\)。
+令 \(k_{腳}=\dfrac{EA}{L}\)，則
+\(F_s=k_{腳}\Delta x_s,\quad F_\ell=k_{腳}(\Delta x_s+d)\)，
+故 \(F_\ell-F_s=k_{腳}d=\dfrac{EAd}{L}\)。</p>
+<p class="step"><strong>力平衡</strong>（桌重忽略）：\(F_\ell+3F_s=Mg=290\times9.8=2842\ \text{N}\)。</p>
+<p class="step"><strong>計算 \(k_{腳}d\)</strong>：
+\[\frac{EAd}{L}=\frac{(1.3\times10^{10})(1.0\times10^{-4})(5.0\times10^{-4})}{1.00}=650\ \text{N}\]</p>
+<p class="step">由 \(F_\ell=F_s+650\) 代入平衡式：
+\[F_s+650+3F_s=2842\quad\Rightarrow\quad 4F_s=2192\quad\Rightarrow\quad F_s=548\ \text{N}\]
+\[F_\ell=548+650=1198\ \text{N}\]</p>
+<p class="step"><span class="ans">答案</span>：三隻短腳各受 <strong>548 N</strong>；長腳受 <strong>1198 N</strong>。（檢查：1198 + 3×548 = 2842 N = Mg ✓）</p>
+<div class="note">長腳因原本較長，要把桌面壓平就得多壓 d，依虎克定律自然分擔更多重量——這就是「搖晃桌子放重物後變穩」的物理。</div>
+</div>
+
+<!-- ===================== SUMMARY ===================== -->
+<h2 id="summary">總結</h2>
+<div class="card">
+<strong>第一部分：位能與能量守恆</strong>
+<ul>
+  <li>位能屬於<strong>系統</strong>；\(\Delta U=-W\)。</li>
+  <li><strong>保守力</strong>（重力、彈力）路徑獨立，可定義位能；<strong>非保守力</strong>（摩擦、阻力）不行。</li>
+  <li>重力位能 \(U=mgz\)；彈力位能 \(U=\frac12 kx^2\)（參考點任意，但 ΔU 不變）。</li>
+  <li>力學能守恆：\(K_1+U_1=K_2+U_2\)（僅保守力）。</li>
+  <li>位能曲線：\(F(x)=-dU/dx\)；\(K=E_{mec}-U\)；轉折點 K=0；平衡點斜率=0。</li>
+  <li>外力作功：無摩擦 \(W=\Delta E_{mec}\)；有摩擦 \(W=\Delta E_{mec}+\Delta E_{th}\)。</li>
+  <li>孤立系統：\(\Delta E_{mec}+\Delta E_{th}+\Delta E_{int}=0\)。外力可不作功（推牆、引擎）。</li>
+  <li>功率 \(P=dE/dt\)。</li>
+</ul>
+</div>
+<div class="card alt">
+<strong>第二部分：平衡與彈性</strong>
+<ul>
+  <li>平衡：\(\vec F_{net}=0,\ \vec\tau_{net}=0\)；靜平衡加 \(\vec P=0,\vec L=0\)。</li>
+  <li>穩定 / 不穩定 / 中性平衡。</li>
+  <li>重心 ≈ 質心（當各處 g 相同）。</li>
+  <li>應力 = 模量 × 應變；超過降伏強度永久變形，極限強度斷裂。</li>
+  <li>楊氏模量 \(E\)（拉壓）、剛性模量 \(G\)（剪）、體積模量 \(B\)（液壓）。</li>
+</ul>
+</div>
+
+<hr>
+<p class="small">資料來源：UFUG 1501 General Physics I — Module 2 講義（Walker, <em>Physics</em>, 2018, Ch.8 & 12）。本筆記依講義內容整理為繁體中文並補充例題逐步解法；公式與數值以 \(g=9.8\ \text{m/s}^2\) 計算。例題 5 彈簧常數依講義圖表取 \(3.20\times10^3\ \text{N/m}\)。</p>
+
+</div>
+</body>
+</html>
